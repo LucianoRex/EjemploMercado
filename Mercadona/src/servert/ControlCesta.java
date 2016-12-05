@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import Singleton.MysqlConnect;
 
 /**
- * Servlet implementation class ControlLista
+ * Servlet implementation class ControlCesta
  */
-@WebServlet("/ControlLista")
-public class ControlLista extends HttpServlet {
+@WebServlet("/ControlCesta")
+public class ControlCesta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ControlLista() {
+    public ControlCesta() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,10 +31,14 @@ public class ControlLista extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		
+		// TODO Auto-generated method stub
 		MysqlConnect c = MysqlConnect.getDbCon();
 		ResultSet rs=null;
+		
+		
+		
+		
+		
 			try {
 				
 				rs=c.query(" SELECT pro.id, pro.nombre, pro.peso, pro.precio, pro.imagen, pro.descripcion FROM producto pro");
@@ -52,14 +56,13 @@ public class ControlLista extends HttpServlet {
 		
 		
 	}
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
+		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

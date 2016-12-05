@@ -15,13 +15,15 @@
 </head>
 <body>
 <header>
+<div class="container-fluid">
 		<div class="col-md-12 text-center">
 			<img  alt="" src="https://www.mercadona.es/imagenes/1415435237___esp/logomercavertical.gif">
 		</div>
+</div>
 </header>
 <br>
 <br>
-
+<div class="container-fluid">
 <div class="row">
 	
 	<div class="col-md-6 text-center">
@@ -47,6 +49,6 @@
 	</div>
 
 </div>
-
+</div>
 </body>
 </html>

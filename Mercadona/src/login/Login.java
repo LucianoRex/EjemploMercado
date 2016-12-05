@@ -74,14 +74,18 @@ public class Login extends HttpServlet {
 				
 				
 				rs = c.query("SELECT * FROM cliente WHERE usuario='"+usuario+"' AND contrasena='"+pasrword+"'");
-				
+				if(rs.next()){
+					request.getSession().setAttribute("usuario", rs.getString("nombre"));
+					request.getSession().setAttribute("id", rs.getString(1));	
+					request.setAttribute("clientes", rs);
+					request.getRequestDispatcher("jsp/usuario.jsp").forward(request, response);
+				}
 				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			request.setAttribute("clientes", rs);
-			request.getRequestDispatcher("jsp/usuario.jsp").forward(request, response);
+			
 			
 			}
 		// TODO Auto-generated method stub

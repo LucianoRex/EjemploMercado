@@ -13,16 +13,16 @@ import javax.servlet.http.HttpServletResponse;
 import Singleton.MysqlConnect;
 
 /**
- * Servlet implementation class ControlLista
+ * Servlet implementation class ControlPedidos
  */
-@WebServlet("/ControlLista")
-public class ControlLista extends HttpServlet {
+@WebServlet("/ControlPedidos")
+public class ControlPedidos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public ControlLista() {
+    public ControlPedidos() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,13 +31,19 @@ public class ControlLista extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
-		
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+	}
+
+	/**
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 */
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		MysqlConnect c = MysqlConnect.getDbCon();
 		ResultSet rs=null;
 			try {
 				
-				rs=c.query(" SELECT pro.id, pro.nombre, pro.peso, pro.precio, pro.imagen, pro.descripcion FROM producto pro");
+				rs=c.query(" SELECT pro.nombre, pro.peso, pro.precio, pro.imagen, pro.descripcion FROM producto pro");
 				
 				
 			} catch (SQLException e) {
@@ -45,22 +51,12 @@ public class ControlLista extends HttpServlet {
 				e.printStackTrace();
 			}
 			request.setAttribute("producto", rs);
-			request.getRequestDispatcher("jsp/listaproductos.jsp").forward(request, response);
+			request.getRequestDispatcher("jsp/pedidos.jsp").forward(request, response);
 			
 		
 		
 		
 		
-	}
-
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		
-		doGet(request, response);
 	}
 
 }
