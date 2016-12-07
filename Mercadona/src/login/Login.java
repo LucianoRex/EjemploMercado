@@ -57,6 +57,14 @@ public class Login extends HttpServlet {
 				
 				c.insert("INSERT INTO cliente (nombre,apellido1,apellido2,direccion,edad,usuario,contrasena)  VALUES ('"+nom+"','"+apellido1+"','"+apellido2+"','"
 				+direccion+"','"+edad+"','"+usuario+"','"+pasrword+"');");
+				ResultSet rs=null;
+				rs = c.query("SELECT * FROM cliente WHERE usuario='"+usuario+"' AND contrasena='"+pasrword+"'");
+				if(rs.next()){
+					request.getSession().setAttribute("usuario", rs.getString("nombre"));
+					request.getSession().setAttribute("id", rs.getString(1));	
+					request.setAttribute("clientes", rs);
+					request.getRequestDispatcher("jsp/usuario.jsp").forward(request, response);
+				}
 				
 				
 			} catch (SQLException e) {
