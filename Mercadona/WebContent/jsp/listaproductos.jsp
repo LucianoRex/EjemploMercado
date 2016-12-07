@@ -60,7 +60,7 @@
 					<p> <%= rs.getString("precio") %> euros </p><br></b></h3>
 					<form action='ControlCesta?id=<%=rs.getString("id")  %>' method="post"> 
 					<input name="cantidad" type="num" placeholder="Cantidad"><br><br>
-					<input name="añadir" type="submit" value="Aceptar"><br>
+					<input name="incluir" type="submit" value="Aceptar"><br>
 					</form>
 					</div>
 			
@@ -70,6 +70,23 @@
 
 			</div>
 		</div>
-	
+	<br>
+	<br>
+	<br>
+	<br>	
+	<div class="row">
+		<div class= "col-md-6 text-center" method="get">
+			
+			<a name="Fin" href="ControlCesta">
+			<button>Finalizar Pedido</button>
+			</a><br>
+		</div>
+		<div class= "col-md-6 text-center" method="get">
+			
+			<a name="Cancelar" href="/Mercadona/index.jsp">
+			<button>Cancelar</button>
+			</a><br>
+		</div>
+	</div>
 </body>
 </html>

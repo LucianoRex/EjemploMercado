@@ -35,9 +35,9 @@ public class ControlCesta extends HttpServlet {
 		// TODO Auto-generated method stub
 		MysqlConnect c = MysqlConnect.getDbCon();
 		ResultSet rs=null;
-		
-		ArrayList<>= 
-		
+		ArrayList<Producto> cesta = new ArrayList<>();
+	
+		if (request.getParameter("incluir")!=null){
 		
 		
 			try {
@@ -53,7 +53,7 @@ public class ControlCesta extends HttpServlet {
 			request.getRequestDispatcher("jsp/listaproductos.jsp").forward(request, response);
 			
 		
-		
+		}
 		
 		
 	}

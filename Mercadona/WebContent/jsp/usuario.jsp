@@ -24,7 +24,7 @@
 	<br>
 	<br>
 <div class="row text-center">
-	<h3><%= session.getAttribute("usuario") %> <%= session.getAttribute("id") %> </h3>
+	<h3><b><%= session.getAttribute("usuario") %></b> </h3>
 </div>
 	<div class=row>
 		<div class= "col-md-6 text-center" method="get">
