@@ -3,6 +3,7 @@ package servert;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -35,7 +36,7 @@ public class ControlCesta extends HttpServlet {
 		MysqlConnect c = MysqlConnect.getDbCon();
 		ResultSet rs=null;
 		
-		
+		ArrayList<>= 
 		
 		
 		
