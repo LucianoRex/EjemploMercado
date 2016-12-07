@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import Singleton.MysqlConnect;
+import Singleton.Producto;
 
 /**
  * Servlet implementation class ControlCesta
@@ -35,11 +36,15 @@ public class ControlCesta extends HttpServlet {
 		// TODO Auto-generated method stub
 		MysqlConnect c = MysqlConnect.getDbCon();
 		ResultSet rs=null;
-		ArrayList<Producto> cesta = new ArrayList<>();
-	
+		ArrayList<Producto> cesta= new ArrayList<>();
+		Producto venta;
+		int idprod=Integer.parseInt(request.getParameter("id"));
+		int cantidad=Integer.parseInt( request.getParameter("cantidad"));
+		
 		if (request.getParameter("incluir")!=null){
-		
-		
+			venta=new Producto(idprod, cantidad, ());
+			cesta.add(venta);
+		}
 			try {
 				
 				rs=c.query(" SELECT pro.id, pro.nombre, pro.peso, pro.precio, pro.imagen, pro.descripcion FROM producto pro");
@@ -56,7 +61,7 @@ public class ControlCesta extends HttpServlet {
 		}
 		
 		
-	}
+	
 	
 
 	/**
