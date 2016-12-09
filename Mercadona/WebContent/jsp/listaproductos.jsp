@@ -77,7 +77,7 @@
 	<div class="row">
 		<div class= "col-md-6 text-center" method="get">
 			
-			<a name="Fin" href="ControlCesta">
+			<a name="fin" href="ControlCesta">
 			<button>Finalizar Pedido</button>
 			</a><br>
 		</div>

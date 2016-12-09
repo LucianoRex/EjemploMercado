@@ -20,54 +20,86 @@ import Singleton.Producto;
 @WebServlet("/ControlCesta")
 public class ControlCesta extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ControlCesta() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	ArrayList<Producto> cesta = new ArrayList<>();
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public ControlCesta() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		MysqlConnect c = MysqlConnect.getDbCon();
-		ResultSet rs=null;
-		ArrayList<Producto> cesta= new ArrayList<>();
+		ResultSet rs = null;
+
 		Producto venta;
-		int idprod=Integer.parseInt(request.getParameter("id"));
-		int cantidad=Integer.parseInt( request.getParameter("cantidad"));
-		
-		if (request.getParameter("incluir")!=null){
-			venta=new Producto(idprod, cantidad, ());
+		int idprod = Integer.parseInt(request.getParameter("id"));
+		int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+		int id_pedido = 0;
+
+		if (request.getParameter("incluir") != null) {
+			venta = new Producto(idprod, cantidad);
 			cesta.add(venta);
-		}
+		} else if (request.getParameter("fin") != null) {
 			try {
-				
-				rs=c.query(" SELECT pro.id, pro.nombre, pro.peso, pro.precio, pro.imagen, pro.descripcion FROM producto pro");
-				
-				
+				id_pedido = c.insert("INSERT INTO `pedido`( `fecha_pedido`, `cliente` ) VALUES (now(),"
+						+ request.getSession().getAttribute("id") + ")");
+			} catch (SQLException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			String ids = "";
+			for (int i = 0; i < cesta.size(); i++) {
+				ids += cesta.get(i).getPro() + ",";
+				try {
+					c.insert("INSERT INTO `pedido_producto`( `pedido`, `producto`, `cantidad`) VALUES (" + id_pedido
+							+ "," + cesta.get(i).getPro() + "," + cesta.get(i).getCantidad() + ")");
+
+					rs = c.query(
+							" SELECT `pp.id`, `pp.pedido`, `pp.producto`, `pp.cantidad` ,`pd.nombre` FROM `pedido_producto` pp , `producto` pd WHERE pp.pedido="
+									+ id_pedido + "and pd.id=pp.producto)");
+
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		}
+		request.setAttribute("cesta", rs);
+		request.getRequestDispatcher("jsp/confirmacion.jsp").forward(request, response);
+
+		if (request.getParameter("confirmar") != null) {
+			try {
+				c.insert("INSERT INTO `pedido`( `confirmacion`) VALUES 1");
+				cesta.clear();
+
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			request.setAttribute("producto", rs);
-			request.getRequestDispatcher("jsp/listaproductos.jsp").forward(request, response);
-			
-		
+
+			request.getRequestDispatcher("jsp/pedido.jsp").forward(request, response);
+		} else if (request.getParameter("Cancelar") != null) {
+
 		}
-		
-		
-	
-	
+
+	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
