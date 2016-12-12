@@ -16,75 +16,100 @@
 <script type="text/javascript" src="js/scrip-super.js"></script>
 </head>
 <body>
-<header>
-<div class="container-fluid">
+	<header>
+	<div class="container-fluid">
 		<div class="col-md-12 text-center">
-			<img  alt="" src="https://www.mercadona.es/imagenes/1415435237___esp/logomercavertical.gif">
+			<img alt=""
+				src="https://www.mercadona.es/imagenes/1415435237___esp/logomercavertical.gif">
 		</div>
-</div>
-</header>
-<br>
-<br>
-<div class="row text-center">
-	<h3><%= session.getAttribute("usuario") %> <%= session.getAttribute("id") %> </h3>
-</div>
-
-<div class="container-fluid">
-		<div class="row  col-md-12 text-center">
-			<h1><b>LISTA DE PRODUCTOS </b></h1>
-		</div>
-</div>
-<br>
-<br>
+	</div>
+	</header>
+	<br>
+	<br>
+	<div class="row text-center">
+		<h3><%=session.getAttribute("usuario")%>
+			<%=session.getAttribute("id")%>
+		</h3>
+	</div>
 
 	<div class="container-fluid">
+		<div class="row  col-md-12 text-center">
+			<h1>
+				<b>LISTA DE PRODUCTOS </b>
+			</h1>
+		</div>
+	</div>
+	<br>
+	<br>
+	
+	<div class="container-fluid">
 		<div class="row">
-			
-			<% 
-			int i=0;
-			ResultSet rs = (ResultSet) (request.getAttribute("producto"));
-			while(rs.next()) {
-				if(i%3==0){
-					i=0;
-					%>
-					</div>
-					<div class="row">
-					<%		
+			<%
+				int i = 0;
+					ResultSet rs = (ResultSet) (request.getAttribute("producto"));
+					while (rs.next()) {
+						if (i % 3 == 0) {
+							i = 0;
+			%>
+		</div>
+		<div class="row">
+			<%
 				}
 			%>
-			
-					<div class="col-md-4 text-center">
-					<p><img class="col-md-12 text-center" src='<%= rs.getString("imagen") %>'></p><br><br>
-					<h3><b>
-					<p> <%= rs.getString("nombre") %></p><br>
-					<p> <%= rs.getString("precio") %> euros </p><br></b></h3>
-					<form action='ControlCesta?id=<%=rs.getString("id")  %>' method="post"> 
-					<input name="cantidad" type="num" placeholder="Cantidad"><br><br>
-					<input name="incluir" type="submit" value="Aceptar"><br>
-					</form>
-					</div>
-			
-			<%
-			i++;
-			} %>
 
+			<div class="col-md-4 text-center">
+				<p>
+					<img class="col-md-12 text-center"
+						src='<%=rs.getString("imagen")%>'>
+				</p>
+				<br> <br>
+				<h3>
+					<b>
+						<p>
+							<%=rs.getString("nombre")%></p> <br>
+						<p>
+							<%=rs.getString("precio")%>
+							euros
+						</p> <br>
+					</b>
+				</h3>
+				<form action='ControlCesta' method="post">
+					<input name="cantidad" type="num" placeholder="Cantidad"><br>
+					<br> <input name="incluir" type="submit" value="Aceptar"><br>
+					<input type="hidden" name="id_prod"
+						value="<%=rs.getString("id")%>">
+				</form>
 			</div>
+
+			<%
+				i++;
+					}
+			%>
+
 		</div>
+	</div>
+	<%if(request.getAttribute("cesta")!=null) {%>
+	<p><%= request.getAttribute("cesta") %></p>
+	
+	<%} %>
+	
+	
+
 	<br>
 	<br>
 	<br>
-	<br>	
+	<br>
 	<div class="row">
-		<div class= "col-md-6 text-center" method="get">
-			
+		<div class="col-md-6 text-center" method="get">
+
 			<a name="fin" href="ControlCesta">
-			<button>Finalizar Pedido</button>
+				<button>Finalizar Pedido</button>
 			</a><br>
 		</div>
-		<div class= "col-md-6 text-center" method="get">
-			
+		<div class="col-md-6 text-center" method="get">
+
 			<a name="Cancelar" href="/Mercadona/index.jsp">
-			<button>Cancelar</button>
+				<button>Cancelar</button>
 			</a><br>
 		</div>
 	</div>

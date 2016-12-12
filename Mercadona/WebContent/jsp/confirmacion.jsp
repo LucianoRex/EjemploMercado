@@ -29,7 +29,7 @@
 			int i=0;
 			ResultSet rs = (ResultSet) (request.getAttribute("producto"));
 			while(rs.next()) {
-				if(i%3==0){
+				if(i%2==0){
 					i=0;
 					%>
 					</div>

@@ -2,14 +2,14 @@ package Singleton;
 
 public class Producto {
 
-	int pro;
+	String pro;
 	int cantidad;
 
-	public int getPro() {
+	public String getPro() {
 		return pro;
 	}
 
-	public void setPro(int pro) {
+	public void setPro(String pro) {
 		this.pro = pro;
 	}
 
@@ -21,7 +21,7 @@ public class Producto {
 		this.cantidad = cantidad;
 	}
 
-	public Producto(int pro, int cantidad) {
+	public Producto(String pro, int cantidad) {
 		super();
 		this.pro = pro;
 		this.cantidad = cantidad;

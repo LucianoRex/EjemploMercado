@@ -41,24 +41,32 @@ public class ControlCesta extends HttpServlet {
 		ResultSet rs = null;
 
 		Producto venta;
-		int idprod = Integer.parseInt(request.getParameter("id"));
-		int cantidad = Integer.parseInt(request.getParameter("cantidad"));
-		int id_pedido = 0;
+		
+		int id_pedido=0;
 
 		if (request.getParameter("incluir") != null) {
+			String idprod = request.getParameter("id_prod").toString();
+			int cantidad = Integer.parseInt(request.getParameter("cantidad"));
 			venta = new Producto(idprod, cantidad);
 			cesta.add(venta);
+			request.setAttribute("cesta", cesta);
+			request.getRequestDispatcher("ControlLista").forward(request, response);
+			//response.sendRedirect("ControlLista");
 		} else if (request.getParameter("fin") != null) {
 			try {
-				id_pedido = c.insert("INSERT INTO `pedido`( `fecha_pedido`, `cliente` ) VALUES (now(),"
-						+ request.getSession().getAttribute("id") + ")");
+				 c.insert("INSERT INTO `pedido`( `fecha_pedido`, `cliente` ) VALUES (now(),"
+						+ request.getSession().getAttribute("id") +")");
+				rs=c.query("SELECT * FROM `pedido` WHERE id=(SELECT MAX(id) FROM `pedido`)");
+				id_pedido=rs.getInt("id");
+				 rs = c.query(
+							" SELECT `pp.id`, `pp.pedido`, `pp.producto`, `pp.cantidad` ,`pd.nombre` FROM `pedido_producto` pp , `producto` pd WHERE pp.pedido="
+									+ id_pedido + "and pd.id=pp.producto)");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			String ids = "";
+
 			for (int i = 0; i < cesta.size(); i++) {
-				ids += cesta.get(i).getPro() + ",";
 				try {
 					c.insert("INSERT INTO `pedido_producto`( `pedido`, `producto`, `cantidad`) VALUES (" + id_pedido
 							+ "," + cesta.get(i).getPro() + "," + cesta.get(i).getCantidad() + ")");
@@ -73,9 +81,10 @@ public class ControlCesta extends HttpServlet {
 				}
 
 			}
+			request.setAttribute("cesta", rs);
+			request.getRequestDispatcher("jsp/confirmacion.jsp").forward(request, response);	
 		}
-		request.setAttribute("cesta", rs);
-		request.getRequestDispatcher("jsp/confirmacion.jsp").forward(request, response);
+		
 
 		if (request.getParameter("confirmar") != null) {
 			try {
