@@ -101,10 +101,10 @@
 	<br>
 	<div class="row">
 		<div class="col-md-6 text-center" method="get">
-
-			<a name="fin" href="ControlCesta">
-				<button>Finalizar Pedido</button>
-			</a><br>
+			<form action="ControlCesta">
+			<input type="submit" name="fin">
+			</form>
+		<br>
 		</div>
 		<div class="col-md-6 text-center" method="get">
 

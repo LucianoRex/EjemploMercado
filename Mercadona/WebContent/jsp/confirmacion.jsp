@@ -24,41 +24,54 @@
 	</div>
 	<div class="container-fluid">
 		<div class="row">
-			
-			<% 
-			int i=0;
-			ResultSet rs = (ResultSet) (request.getAttribute("producto"));
-			while(rs.next()) {
-				if(i%2==0){
-					i=0;
-					%>
-					</div>
-					<div class="row">
-					<%		
+
+			<%
+				int i = 0;
+				ResultSet rs = (ResultSet) (request.getAttribute("cesta"));
+				while (rs.next()) {
+					if (i % 2 == 0) {
+						i = 0;
+			%>
+		</div>
+		<div class="row">
+			<%
 				}
 			%>
-			
-					<div class="col-md-4 text-center">
-					<p><img class="col-md-12 text-center" src='<%= rs.getString("imagen") %>'></p><br><br>
-					<h3><b>
-					<p> <%= rs.getString("nombre") %></p><br>
-					<p> <%= rs.getString("cantidad") %>  </p><br></b></h3>
-					<form action='confirmar' method="post"> 
+
+			<div class="col-md-4 text-center">
+				<div class="col-md-6 text-center">
+					<h3>
+						<b>
+							<p>
+								<%=rs.getString("producto")%>
+							</p>
+						</b>
+					</h3>
+				</div>
+				<h3>
+					<b>
+						<p>
+							<%=rs.getString("cantidad")%>
+						</p> <br>
+					</b>
+				</h3>
+				<form action='confirmar' method="post">
 					<input name="aceptar" type="submit" value="Aceptar"><br>
 					<input name="cancelar" type="submit" value="Cancelar"><br>
-					</form>
-					</div>
-			
-			<%
-			i++;
-			} %>
-
+				</form>
 			</div>
+
+			<%
+				i++;
+				}
+			%>
+
 		</div>
+	</div>
 	<br>
 	<br>
 	<br>
-	<br>	
+	<br>
 
 
 

@@ -42,7 +42,7 @@ public class ControlCesta extends HttpServlet {
 
 		Producto venta;
 		
-		int id_pedido=0;
+		
 
 		if (request.getParameter("incluir") != null) {
 			String idprod = request.getParameter("id_prod").toString();
@@ -53,13 +53,14 @@ public class ControlCesta extends HttpServlet {
 			request.getRequestDispatcher("ControlLista").forward(request, response);
 			//response.sendRedirect("ControlLista");
 		} else if (request.getParameter("fin") != null) {
+			int id_pedido=0;
 			try {
+				
 				 c.insert("INSERT INTO `pedido`( `fecha_pedido`, `cliente` ) VALUES (now(),"
 						+ request.getSession().getAttribute("id") +")");
 				rs=c.query("SELECT * FROM `pedido` WHERE id=(SELECT MAX(id) FROM `pedido`)");
 				id_pedido=rs.getInt("id");
-				 rs = c.query(
-							" SELECT `pp.id`, `pp.pedido`, `pp.producto`, `pp.cantidad` ,`pd.nombre` FROM `pedido_producto` pp , `producto` pd WHERE pp.pedido="
+			 rs = c.query(" SELECT `pp.id`, `pp.pedido`, `pp.producto`, `pp.cantidad` ,`pd.nombre` FROM `pedido_producto` pp , `producto` pd WHERE pp.pedido="
 									+ id_pedido + "and pd.id=pp.producto)");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block
@@ -100,7 +101,7 @@ public class ControlCesta extends HttpServlet {
 		} else if (request.getParameter("Cancelar") != null) {
 
 		}
-
+		
 	}
 
 	/**
